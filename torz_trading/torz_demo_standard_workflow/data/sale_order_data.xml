@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── SO 1: Ahmed — PPF Full Car (→ stage: Vehicle Received) ─── -->
+        <record id="demo_so_ahmed_ppf" model="sale.order">
+            <field name="partner_id" ref="torz_demo_standard_workflow.demo_customer_ahmed"/>
+        </record>
+        <record id="demo_so_line_ahmed_ppf" model="sale.order.line">
+            <field name="order_id" ref="torz_demo_standard_workflow.demo_so_ahmed_ppf"/>
+            <field name="product_id" ref="torz_phase1_workflow.product_ppf_service"/>
+            <field name="name">Paint Protection Film - Full Car (Ahmed Al-Rashidi, SAR-1001)</field>
+            <field name="product_uom_qty">8</field>
+            <field name="price_unit">1500.0</field>
+        </record>
+
+        <!-- ── SO 2: Mohammed — Nano Ceramic (→ stage: In Progress) ──── -->
+        <record id="demo_so_mohammed_ceramic" model="sale.order">
+            <field name="partner_id" ref="torz_demo_standard_workflow.demo_customer_mohammed"/>
+        </record>
+        <record id="demo_so_line_mohammed_ceramic" model="sale.order.line">
+            <field name="order_id" ref="torz_demo_standard_workflow.demo_so_mohammed_ceramic"/>
+            <field name="product_id" ref="torz_phase1_workflow.product_ceramic_service"/>
+            <field name="name">Nano Ceramic Coating - Full Exterior (Mohammed Al-Zahrani, SAR-2002)</field>
+            <field name="product_uom_qty">6</field>
+            <field name="price_unit">800.0</field>
+        </record>
+
+        <!-- ── SO 3: Fahad — Window Tinting (→ stage: New, not yet started) -->
+        <record id="demo_so_fahad_tint" model="sale.order">
+            <field name="partner_id" ref="torz_demo_standard_workflow.demo_customer_fahad"/>
+        </record>
+        <record id="demo_so_line_fahad_tint" model="sale.order.line">
+            <field name="order_id" ref="torz_demo_standard_workflow.demo_so_fahad_tint"/>
+            <field name="product_id" ref="torz_phase1_workflow.product_tint_service"/>
+            <field name="name">Window Tinting - All Sides (Fahad Al-Otaibi, SAR-3003)</field>
+            <field name="product_uom_qty">4</field>
+            <field name="price_unit">400.0</field>
+        </record>
+
+    </data>
+</odoo>

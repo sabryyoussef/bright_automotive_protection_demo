@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extra models under the Phase-1 "Torz Demo" brand -->
+        <record id="torz_fleet_model_suv" model="fleet.vehicle.model">
+            <field name="name">Demo SUV</field>
+            <field name="brand_id" ref="torz_phase1_workflow.torz_fleet_brand"/>
+            <field name="vehicle_type">car</field>
+        </record>
+        <record id="torz_fleet_model_pickup" model="fleet.vehicle.model">
+            <field name="name">Demo Pickup</field>
+            <field name="brand_id" ref="torz_phase1_workflow.torz_fleet_brand"/>
+            <field name="vehicle_type">car</field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <!-- Ahmed Al-Rashidi — White Sedan -->
+        <record id="demo_vehicle_ahmed" model="fleet.vehicle">
+            <field name="license_plate">SAR-1001</field>
+            <field name="vin_sn">1HGCM82633A001001</field>
+            <field name="model_id" ref="torz_phase1_workflow.torz_fleet_model_sedan"/>
+            <field name="driver_id" ref="torz_demo_standard_workflow.demo_customer_ahmed"/>
+            <field name="color">White</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Mohammed Al-Zahrani — Black SUV -->
+        <record id="demo_vehicle_mohammed" model="fleet.vehicle">
+            <field name="license_plate">SAR-2002</field>
+            <field name="vin_sn">2T1BURHE0JC002002</field>
+            <field name="model_id" ref="torz_demo_standard_workflow.torz_fleet_model_suv"/>
+            <field name="driver_id" ref="torz_demo_standard_workflow.demo_customer_mohammed"/>
+            <field name="color">Black</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Fahad Al-Otaibi — Silver Pickup -->
+        <record id="demo_vehicle_fahad" model="fleet.vehicle">
+            <field name="license_plate">SAR-3003</field>
+            <field name="vin_sn">3VWFE21C04M003003</field>
+            <field name="model_id" ref="torz_demo_standard_workflow.torz_fleet_model_pickup"/>
+            <field name="driver_id" ref="torz_demo_standard_workflow.demo_customer_fahad"/>
+            <field name="color">Silver</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+    </data>
+</odoo>

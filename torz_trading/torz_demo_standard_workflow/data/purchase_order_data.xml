@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Draft PO to Gulf Auto Film Supplies — PPF rolls + tint rolls to TMAIN -->
+        <record id="demo_po_film_supplies" model="purchase.order">
+            <field name="partner_id" ref="torz_demo_standard_workflow.demo_vendor_autoparts"/>
+            <field name="note">Monthly film materials replenishment order - Torz Main Warehouse.</field>
+        </record>
+
+        <record id="demo_po_line_ppf_rolls" model="purchase.order.line">
+            <field name="order_id" ref="torz_demo_standard_workflow.demo_po_film_supplies"/>
+            <field name="product_id" ref="torz_phase1_workflow.product_ppf_film_roll"/>
+            <field name="name">PPF Film Roll — 5 units</field>
+            <field name="product_qty">5</field>
+            <field name="price_unit">450.0</field>
+            <field name="date_planned" eval="(DateTime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="demo_po_line_tint_rolls" model="purchase.order.line">
+            <field name="order_id" ref="torz_demo_standard_workflow.demo_po_film_supplies"/>
+            <field name="product_id" ref="torz_phase1_workflow.product_tint_film_roll"/>
+            <field name="name">Window Tint Film Roll — 4 units</field>
+            <field name="product_qty">4</field>
+            <field name="price_unit">100.0</field>
+            <field name="date_planned" eval="(DateTime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="demo_po_line_ceramic" model="purchase.order.line">
+            <field name="order_id" ref="torz_demo_standard_workflow.demo_po_film_supplies"/>
+            <field name="product_id" ref="torz_phase1_workflow.product_ceramic_bottle"/>
+            <field name="name">Nano Ceramic Coating Bottle — 10 units</field>
+            <field name="product_qty">10</field>
+            <field name="price_unit">65.0</field>
+            <field name="date_planned" eval="(DateTime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+    </data>
+</odoo>

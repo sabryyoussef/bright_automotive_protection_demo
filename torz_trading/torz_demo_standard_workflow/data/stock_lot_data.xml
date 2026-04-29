@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- PPF Film Roll lots (lot-tracked) -->
+        <record id="demo_lot_ppf_001" model="stock.lot">
+            <field name="name">PPF-ROLL-2024-001</field>
+            <field name="product_id" ref="torz_phase1_workflow.product_ppf_film_roll"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="demo_lot_ppf_002" model="stock.lot">
+            <field name="name">PPF-ROLL-2024-002</field>
+            <field name="product_id" ref="torz_phase1_workflow.product_ppf_film_roll"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="demo_lot_ppf_003" model="stock.lot">
+            <field name="name">PPF-ROLL-2024-003</field>
+            <field name="product_id" ref="torz_phase1_workflow.product_ppf_film_roll"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Window Tint Film Roll lots -->
+        <record id="demo_lot_tint_001" model="stock.lot">
+            <field name="name">TINT-ROLL-2024-001</field>
+            <field name="product_id" ref="torz_phase1_workflow.product_tint_film_roll"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="demo_lot_tint_002" model="stock.lot">
+            <field name="name">TINT-ROLL-2024-002</field>
+            <field name="product_id" ref="torz_phase1_workflow.product_tint_film_roll"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+    </data>
+</odoo>

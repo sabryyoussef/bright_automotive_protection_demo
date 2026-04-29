@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── Demo Customers ───────────────────────────────────────────── -->
+        <record id="demo_customer_ahmed" model="res.partner">
+            <field name="name">Ahmed Al-Rashidi</field>
+            <field name="company_type">person</field>
+            <field name="is_company" eval="False"/>
+            <field name="phone">+966501111001</field>
+            <field name="email">ahmed.rashidi@torz-demo.example.com</field>
+            <field name="street">Al-Olaya District, King Fahd Road</field>
+            <field name="city">Riyadh</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+
+        <record id="demo_customer_mohammed" model="res.partner">
+            <field name="name">Mohammed Al-Zahrani</field>
+            <field name="company_type">person</field>
+            <field name="is_company" eval="False"/>
+            <field name="phone">+966502222002</field>
+            <field name="email">m.zahrani@torz-demo.example.com</field>
+            <field name="street">Al-Naseem District</field>
+            <field name="city">Jeddah</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+
+        <record id="demo_customer_fahad" model="res.partner">
+            <field name="name">Fahad Al-Otaibi</field>
+            <field name="company_type">person</field>
+            <field name="is_company" eval="False"/>
+            <field name="phone">+966503333003</field>
+            <field name="email">f.otaibi@torz-demo.example.com</field>
+            <field name="street">Al-Wurud District</field>
+            <field name="city">Riyadh</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+
+        <!-- ── Vendor ─────────────────────────────────────────────────── -->
+        <record id="demo_vendor_autoparts" model="res.partner">
+            <field name="name">Gulf Auto Film Supplies Co.</field>
+            <field name="company_type">company</field>
+            <field name="is_company" eval="True"/>
+            <field name="supplier_rank">1</field>
+            <field name="phone">+96611444004</field>
+            <field name="email">orders@gulfautofilm.example.com</field>
+            <field name="street">Industrial City, Zone 2</field>
+            <field name="city">Riyadh</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+
+    </data>
+</odoo>
