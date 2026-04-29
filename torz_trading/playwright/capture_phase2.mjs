@@ -4,14 +4,17 @@
  * Captures: customers, fleet vehicles, opening stock, confirmed SOs,
  * FSM job cards at various stages, and the draft Purchase Order.
  *
+ * Screenshots land directly in torz_demo_standard_workflow/static/description/
+ *
  * Env:
  *   ODOO_URL=http://127.0.0.1:8069   (default)
  *   ODOO_LOGIN=admin                  (default)
  *   ODOO_PASSWORD=required
  *   ODOO_DB=cleaning_demo             (default)
  *
- * Run:
- *   $env:ODOO_PASSWORD="admin"; npm run capture
+ * Run (from this folder):
+ *   npm install
+ *   $env:ODOO_PASSWORD="admin"; npm run capture-phase2
  */
 
 import { chromium } from "@playwright/test";
@@ -20,7 +23,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = path.resolve(__dirname, "..", "phase2_workflow_docs", "screenshots");
+const OUT_DIR = path.resolve(__dirname, "..", "torz_demo_standard_workflow", "static", "description");
 
 const BASE     = (process.env.ODOO_URL      || "http://127.0.0.1:8069").replace(/\/$/, "");
 const LOGIN    = process.env.ODOO_LOGIN     || "admin";
@@ -29,19 +32,16 @@ const DB       = process.env.ODOO_DB        || "cleaning_demo";
 
 const VIEWPORT = { width: 1920, height: 1080 };
 
-// ── Odoo 19 URL paths ─────────────────────────────────────────────────────
 const PATHS = {
   home:       "/odoo",
   contacts:   "/odoo/contacts",
   fleet:      "/odoo/fleet",
   inventory:  "/odoo/inventory",
-  stockQuant: "/odoo/inventory/products",   // Product → On-Hand view
+  stockQuant: "/odoo/inventory/products",
   sales:      "/odoo/sales",
   fsm:        "/odoo/field-service",
   purchase:   "/odoo/purchase",
 };
-
-// ── Helpers ───────────────────────────────────────────────────────────────
 
 async function login(page) {
   const loginPath = DB ? `/web/login?db=${encodeURIComponent(DB)}` : "/web/login";
@@ -121,7 +121,6 @@ async function search(page, term) {
 }
 
 async function clearSearch(page) {
-  // click all × / delete-facet buttons
   const closes = page.locator(".o_searchview .o_facet_remove, .o_searchview .o_delete");
   const count = await closes.count().catch(() => 0);
   for (let i = 0; i < count; i++) {
@@ -165,8 +164,6 @@ async function snap(page, name, opts = {}) {
   console.log(`  ✓ ${name} (${kb} KB)`);
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────
-
 async function main() {
   if (!PASSWORD) { console.error("Set ODOO_PASSWORD env var."); process.exit(1); }
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -177,12 +174,10 @@ async function main() {
 
   await login(page);
 
-  // ── 01: Home ──────────────────────────────────────────────────────────
   console.log("\n[01] Home / app menu");
   await goto(page, PATHS.home);
   await snap(page, "01_home.png");
 
-  // ── 02: Contacts — 3 demo customers list ─────────────────────────────
   console.log("\n[02] Contacts — demo customers list");
   await goto(page, PATHS.contacts);
   await switchToList(page);
@@ -191,7 +186,6 @@ async function main() {
   await search(page, "Al-");
   await snap(page, "02_contacts_demo_customers_list.png");
 
-  // ── 03: Contacts — Ahmed Al-Rashidi form ─────────────────────────────
   console.log("\n[03] Contacts — Ahmed Al-Rashidi form");
   await clearSearch(page);
   await search(page, "Ahmed Al-Rashidi");
@@ -200,26 +194,22 @@ async function main() {
     await snap(page, "03_contact_ahmed_form.png");
   } catch { console.warn("  ⚠ Ahmed row not found — skipping"); }
 
-  // ── 04: Fleet — 3 demo vehicles list ─────────────────────────────────
   console.log("\n[04] Fleet — demo vehicles list (SAR-)");
   await goto(page, PATHS.fleet);
   await switchToList(page);
   await search(page, "SAR-");
   await snap(page, "04_fleet_demo_vehicles_list.png");
 
-  // ── 05: Fleet — SAR-1001 (Ahmed sedan) form ───────────────────────────
   console.log("\n[05] Fleet — SAR-1001 vehicle form");
   try {
     await openRowContaining(page, "SAR-1001");
     await snap(page, "05_fleet_sar1001_form.png");
   } catch { console.warn("  ⚠ SAR-1001 row not found — skipping"); }
 
-  // ── 06: Inventory overview ────────────────────────────────────────────
   console.log("\n[06] Inventory overview (warehouses)");
   await goto(page, PATHS.inventory);
   await snap(page, "06_inventory_overview.png");
 
-  // ── 07: Inventory — opening stock (on-hand) ───────────────────────────
   console.log("\n[07] Inventory — on-hand quantities (Torz materials)");
   await goto(page, PATHS.stockQuant);
   await switchToList(page);
@@ -228,31 +218,26 @@ async function main() {
   await search(page, "Film Roll");
   await snap(page, "07_inventory_onhand_film_rolls.png");
 
-  // ── 08: Sales Orders — confirmed SOs list ─────────────────────────────
   console.log("\n[08] Sales orders — all confirmed SOs");
   await goto(page, PATHS.sales);
   await switchToList(page);
   await snap(page, "08_sales_orders_list.png");
 
-  // ── 09: Sales order form — Ahmed (PPF) ────────────────────────────────
   console.log("\n[09] Sales order form — Ahmed PPF");
   try {
     await openRowContaining(page, "Ahmed");
     await snap(page, "09_so_ahmed_ppf_form.png", { fullPage: true });
   } catch { console.warn("  ⚠ Ahmed SO row not found — skipping"); }
 
-  // ── 10: FSM — All tasks (kanban, 3 stages visible) ────────────────────
   console.log("\n[10] Field Service — tasks kanban (3 job cards)");
   await goto(page, PATHS.fsm);
   await switchToKanban(page);
   await snap(page, "10_fsm_tasks_kanban.png");
 
-  // ── 11: FSM — tasks list ──────────────────────────────────────────────
   console.log("\n[11] Field Service — tasks list");
   await switchToList(page);
   await snap(page, "11_fsm_tasks_list.png");
 
-  // ── 12: FSM — Ahmed task form (Vehicle Received stage) ────────────────
   console.log("\n[12] FSM task — Ahmed (Vehicle Received)");
   try {
     await openRowContaining(page, "Ahmed");
@@ -262,7 +247,6 @@ async function main() {
     await page.waitForTimeout(800);
   } catch { console.warn("  ⚠ Ahmed task not found — skipping"); }
 
-  // ── 13: FSM — Mohammed task form (In Progress stage) ──────────────────
   console.log("\n[13] FSM task — Mohammed (In Progress)");
   try {
     await openRowContaining(page, "Mohammed");
@@ -272,7 +256,6 @@ async function main() {
     await page.waitForTimeout(800);
   } catch { console.warn("  ⚠ Mohammed task not found — skipping"); }
 
-  // ── 14: Purchase Order — draft PO to Gulf Auto Film ───────────────────
   console.log("\n[14] Purchase — draft PO to Gulf Auto Film Supplies");
   await goto(page, PATHS.purchase);
   await switchToList(page);
@@ -285,7 +268,6 @@ async function main() {
     await snap(page, "14b_purchase_order_form.png", { fullPage: true });
   } catch { console.warn("  ⚠ PO row not found — skipping"); }
 
-  // ── 15: Stock lots — PPF roll lots ────────────────────────────────────
   console.log("\n[15] Inventory — PPF lot numbers");
   await page.goto(`${BASE}/odoo/inventory/lots`, { waitUntil: "load", timeout: 120000 });
   await waitForShell(page);

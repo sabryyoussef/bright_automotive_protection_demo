@@ -1,14 +1,17 @@
 /**
  * Torz Trading — Phase 1 workflow screenshots for cleaning_demo (Odoo 19).
  *
+ * Screenshots land directly in torz_phase1_workflow/static/description/
+ *
  * Env:
  *   ODOO_URL=http://127.0.0.1:8069   (default)
  *   ODOO_LOGIN=admin                  (default)
  *   ODOO_PASSWORD=required
  *   ODOO_DB=cleaning_demo             (default)
  *
- * Run:
- *   $env:ODOO_PASSWORD="admin"; npm run capture
+ * Run (from this folder):
+ *   npm install
+ *   $env:ODOO_PASSWORD="admin"; npm run capture-phase1
  */
 
 import { chromium } from "@playwright/test";
@@ -17,7 +20,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = path.resolve(__dirname, "..", "phase1_workflow_docs", "screenshots");
+const OUT_DIR = path.resolve(__dirname, "..", "torz_phase1_workflow", "static", "description");
 
 const BASE = (process.env.ODOO_URL || "http://127.0.0.1:8069").replace(/\/$/, "");
 const LOGIN = process.env.ODOO_LOGIN || "admin";
@@ -26,7 +29,6 @@ const DB = process.env.ODOO_DB || "cleaning_demo";
 
 const VIEWPORT = { width: 1920, height: 1080 };
 
-// Odoo 19 URL paths (from ir.actions.act_window path field)
 const PATHS = {
   fleet:          "/odoo/fleet",
   products:       "/odoo/sales/products",
@@ -42,13 +44,11 @@ async function login(page) {
   const loginPath = DB ? `/web/login?db=${encodeURIComponent(DB)}` : "/web/login";
   await page.goto(`${BASE}${loginPath}`, { waitUntil: "domcontentloaded", timeout: 120000 });
   await page.setViewportSize(VIEWPORT);
-
   await page.locator("form.oe_login_form").waitFor({ state: "attached", timeout: 60000 });
   await page.evaluate(() => {
     const f = document.querySelector("form.oe_login_form");
     if (f?.classList.contains("d-none")) f.classList.remove("d-none");
   });
-
   await page.locator("#login").waitFor({ state: "visible", timeout: 60000 });
   await page.locator("#login").fill(LOGIN);
   await page.locator("#password").fill(PASSWORD);
@@ -73,7 +73,6 @@ async function goto(page, urlPath) {
 }
 
 async function switchToList(page) {
-  // Switch to list view if not already there
   const listBtn = page.locator(
     "button.o_list_button, .o_cp_switch_buttons .o_switch_view[data-type='list'], .o_cp_switch_buttons button[aria-label*='List'], .o_switch_view.o_list"
   ).first();
@@ -85,7 +84,6 @@ async function switchToList(page) {
 }
 
 async function search(page, term) {
-  // Odoo 19: search input is inside .o_searchview
   const input = page.locator(".o_searchview input").first();
   try {
     await input.waitFor({ state: "visible", timeout: 10000 });
@@ -121,7 +119,6 @@ async function snap(page, name, opts = {}) {
   console.log(`  ✓ ${name} (${kb} KB)`);
 }
 
-// ──────────────────────────────────────────────
 async function main() {
   if (!PASSWORD) { console.error("Set ODOO_PASSWORD."); process.exit(1); }
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -132,12 +129,10 @@ async function main() {
 
   await login(page);
 
-  // ── STEP 1: Home after login ──────────────────────────────────────────────
   console.log("\n[1] Home / app menu");
   await goto(page, "/odoo");
   await snap(page, "01_home_after_login.png");
 
-  // ── STEP 2–3: Fleet vehicle ───────────────────────────────────────────────
   console.log("\n[2] Fleet — vehicle list");
   await goto(page, PATHS.fleet);
   await switchToList(page);
@@ -152,26 +147,22 @@ async function main() {
     console.warn("  ⚠ no fleet row found — skipping form screenshot");
   }
 
-  // ── STEP 4: Products (search Torz) ───────────────────────────────────────
   console.log("\n[4] Products — Torz service products");
   await goto(page, PATHS.products);
   await switchToList(page);
   await search(page, "Torz");
   await snap(page, "04_products_torz_search.png");
 
-  // ── STEP 5: Inventory overview showing Torz warehouses ───────────────────
   console.log("\n[5] Inventory overview / Torz warehouses");
   await goto(page, PATHS.warehouse);
   await snap(page, "05_inventory_overview.png");
 
-  // ── STEP 6: Field Service — All Tasks (Torz job cards) ───────────────────
   console.log("\n[6] Field Service — tasks list");
   await goto(page, PATHS.fsm);
   await switchToList(page);
   await search(page, "Torz");
   await snap(page, "06_fsm_tasks_torz_search.png");
 
-  // ── STEP 7: Field Service — Projects list ────────────────────────────────
   console.log("\n[7] Field Service — projects");
   await goto(page, PATHS.fsmProjects);
   await switchToList(page);
@@ -186,19 +177,16 @@ async function main() {
     console.warn("  ⚠ no project row — skipping form");
   }
 
-  // ── STEP 8: Sales orders list ─────────────────────────────────────────────
   console.log("\n[8] Sales orders list");
   await goto(page, PATHS.sales);
   await snap(page, "08_sales_orders_list.png");
 
-  // ── STEP 9: Worksheet templates ───────────────────────────────────────────
   console.log("\n[9] Worksheet templates — Torz car receiving report");
   await goto(page, PATHS.worksheets);
   await switchToList(page);
   await search(page, "Torz");
   await snap(page, "09_worksheet_templates_torz.png");
 
-  // ── STEP 10: Contacts — demo customer ─────────────────────────────────────
   console.log("\n[10] Contacts — Torz Demo Customer");
   await goto(page, PATHS.contacts);
   await switchToList(page);

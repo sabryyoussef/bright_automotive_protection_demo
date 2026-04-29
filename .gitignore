@@ -4,6 +4,7 @@ package-lock.json
 
 # Logs
 *.log
+*.txt
 capture_run.log
 
 # Odoo bytecode
