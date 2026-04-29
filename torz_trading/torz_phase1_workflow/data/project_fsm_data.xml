@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="torz_stage_new" model="project.task.type">
+            <field name="sequence">1</field>
+            <field name="name">New</field>
+        </record>
+        <record id="torz_stage_vehicle_received" model="project.task.type">
+            <field name="sequence">10</field>
+            <field name="name">Vehicle Received</field>
+        </record>
+        <record id="torz_stage_in_progress" model="project.task.type">
+            <field name="sequence">20</field>
+            <field name="name">In Progress</field>
+        </record>
+        <record id="torz_stage_quality_check" model="project.task.type">
+            <field name="sequence">30</field>
+            <field name="name">Quality Check</field>
+        </record>
+        <record id="torz_stage_ready_delivery" model="project.task.type">
+            <field name="sequence">40</field>
+            <field name="name">Ready for Delivery</field>
+        </record>
+        <record id="torz_stage_delivered" model="project.task.type">
+            <field name="sequence">50</field>
+            <field name="name">Delivered</field>
+        </record>
+        <record id="torz_stage_closed" model="project.task.type">
+            <field name="sequence">60</field>
+            <field name="name">Closed</field>
+            <field name="fold" eval="True"/>
+        </record>
+
+        <record id="torz_fsm_project" model="project.project">
+            <field name="name">Torz Trading — Field Service</field>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="is_fsm" eval="True"/>
+            <field name="allow_timesheets" eval="True"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="timesheet_product_id" ref="industry_fsm_sale.field_service_product"/>
+            <field name="type_ids" eval="[
+                (6, 0, [
+                    ref('torz_phase1_workflow.torz_stage_new'),
+                    ref('torz_phase1_workflow.torz_stage_vehicle_received'),
+                    ref('torz_phase1_workflow.torz_stage_in_progress'),
+                    ref('torz_phase1_workflow.torz_stage_quality_check'),
+                    ref('torz_phase1_workflow.torz_stage_ready_delivery'),
+                    ref('torz_phase1_workflow.torz_stage_delivered'),
+                    ref('torz_phase1_workflow.torz_stage_closed'),
+                ]),
+            ]"/>
+        </record>
+    </data>
+</odoo>

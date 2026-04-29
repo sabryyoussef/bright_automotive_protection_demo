@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="torz_partner_demo_customer" model="res.partner">
+            <field name="name">Torz Demo Customer (Person)</field>
+            <field name="company_type">person</field>
+            <field name="email">demo.customer@torz-trading.example.com</field>
+            <field name="phone">+966500000001</field>
+            <field name="street">Phase 1 workflow — demo contact</field>
+        </record>
+    </data>
+</odoo>

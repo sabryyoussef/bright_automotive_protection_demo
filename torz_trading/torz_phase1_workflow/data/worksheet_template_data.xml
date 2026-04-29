@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="torz_worksheet_car_receiving" model="worksheet.template">
+            <field name="name">Torz — Car Receiving Report</field>
+            <field name="res_model">project.task</field>
+        </record>
+    </data>
+</odoo>

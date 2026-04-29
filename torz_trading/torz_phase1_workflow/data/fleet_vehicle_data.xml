@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="torz_fleet_brand" model="fleet.vehicle.model.brand">
+            <field name="name">Torz Demo</field>
+        </record>
+        <record id="torz_fleet_model_sedan" model="fleet.vehicle.model">
+            <field name="name">Demo Sedan</field>
+            <field name="brand_id" ref="torz_phase1_workflow.torz_fleet_brand"/>
+            <field name="vehicle_type">car</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="torz_fleet_vehicle_demo" model="fleet.vehicle">
+            <field name="license_plate">TORZ-DEMO-1</field>
+            <field name="vin_sn">DEMO1234567890VIN</field>
+            <field name="driver_id" ref="torz_phase1_workflow.torz_partner_demo_customer"/>
+            <field name="model_id" ref="torz_phase1_workflow.torz_fleet_model_sedan"/>
+            <field name="color">Silver</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+    </data>
+</odoo>

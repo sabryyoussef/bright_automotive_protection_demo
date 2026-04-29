@@ -1,0 +1,20 @@
+# Node
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+capture_run.log
+
+# Odoo bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

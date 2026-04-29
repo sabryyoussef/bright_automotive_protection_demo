@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="torz_warehouse_main" model="stock.warehouse">
+            <field name="name">Torz Main Warehouse</field>
+            <field name="code">TMAIN</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="torz_warehouse_operations" model="stock.warehouse">
+            <field name="name">Torz Cutting / Operations</field>
+            <field name="code">TOPRS</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+    </data>
+</odoo>

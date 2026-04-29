@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_category_torz_materials" model="product.category">
+            <field name="name">Torz / Automotive Materials</field>
+        </record>
+
+        <!-- Service products: SO line creates FSM task in global Torz FSM project -->
+        <record id="product_ppf_service" model="product.product">
+            <field name="name">Service / Paint Protection Film (PPF)</field>
+            <field name="project_id" ref="torz_phase1_workflow.torz_fsm_project"/>
+            <field name="service_tracking">task_global_project</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_services"/>
+            <field name="list_price">1500.0</field>
+            <field name="uom_id" ref="uom.product_uom_hour"/>
+            <field name="service_policy">delivered_timesheet</field>
+        </record>
+        <record id="product_ceramic_service" model="product.product">
+            <field name="name">Service / Nano Ceramic Coating</field>
+            <field name="project_id" ref="torz_phase1_workflow.torz_fsm_project"/>
+            <field name="service_tracking">task_global_project</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_services"/>
+            <field name="list_price">800.0</field>
+            <field name="uom_id" ref="uom.product_uom_hour"/>
+            <field name="service_policy">delivered_timesheet</field>
+        </record>
+        <record id="product_tint_service" model="product.product">
+            <field name="name">Service / Window Tinting</field>
+            <field name="project_id" ref="torz_phase1_workflow.torz_fsm_project"/>
+            <field name="service_tracking">task_global_project</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_services"/>
+            <field name="list_price">400.0</field>
+            <field name="uom_id" ref="uom.product_uom_hour"/>
+            <field name="service_policy">delivered_timesheet</field>
+        </record>
+        <record id="product_windshield_service" model="product.product">
+            <field name="name">Service / Windshield Protection</field>
+            <field name="project_id" ref="torz_phase1_workflow.torz_fsm_project"/>
+            <field name="service_tracking">task_global_project</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_services"/>
+            <field name="list_price">350.0</field>
+            <field name="uom_id" ref="uom.product_uom_hour"/>
+            <field name="service_policy">delivered_timesheet</field>
+        </record>
+        <record id="product_interior_service" model="product.product">
+            <field name="name">Service / Interior Protection</field>
+            <field name="project_id" ref="torz_phase1_workflow.torz_fsm_project"/>
+            <field name="service_tracking">task_global_project</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_services"/>
+            <field name="list_price">450.0</field>
+            <field name="uom_id" ref="uom.product_uom_hour"/>
+            <field name="service_policy">delivered_timesheet</field>
+        </record>
+
+        <!-- Storable materials (receive → internal transfer → consume on task / adjustments) -->
+        <record id="product_ppf_film_roll" model="product.product">
+            <field name="name">PPF Film Roll</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="torz_phase1_workflow.product_category_torz_materials"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="tracking">lot</field>
+            <field name="list_price">500.0</field>
+        </record>
+        <record id="product_tint_film_roll" model="product.product">
+            <field name="name">Window Tint Film Roll</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="torz_phase1_workflow.product_category_torz_materials"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="tracking">lot</field>
+            <field name="list_price">120.0</field>
+        </record>
+        <record id="product_ceramic_bottle" model="product.product">
+            <field name="name">Nano Ceramic Coating (bottle)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="torz_phase1_workflow.product_category_torz_materials"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="tracking">none</field>
+            <field name="list_price">80.0</field>
+        </record>
+        <record id="product_shop_consumables" model="product.product">
+            <field name="name">Shop Consumables (blades, liquids)</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="torz_phase1_workflow.product_category_torz_materials"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="list_price">25.0</field>
+        </record>
+    </data>
+</odoo>
