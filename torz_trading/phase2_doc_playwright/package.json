@@ -1,0 +1,12 @@
+{
+  "name": "torz-phase2-playwright",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "capture": "node capture_phase2.mjs",
+    "install-browser": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}
