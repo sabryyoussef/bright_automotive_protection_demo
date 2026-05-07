@@ -1,0 +1,10 @@
+<odoo>
+    <record id="view_project_task_form_inspection" model="ir.ui.view">
+        <field name="name">project.task.form.inspection</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="x_inspection_data" widget="car_inspection_widget"/>
+        </field>
+    </record>
+</odoo>
